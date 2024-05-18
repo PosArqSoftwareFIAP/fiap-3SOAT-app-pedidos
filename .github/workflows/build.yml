@@ -1,7 +1,9 @@
-
 name: SonarQube Scan
 
-
+on:
+  push:
+    branches:
+      - main
       - 'feature/**'
   pull_request:
     branches:
