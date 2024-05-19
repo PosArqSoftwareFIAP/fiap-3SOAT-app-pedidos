@@ -1,0 +1,43 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DO_TOKEN }}
+
+    # - name: Build and push Docker image
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     push: true
+    #     tags: registry.digitalocean.com/fiap-food-registry/fiap-food:latest
+    #     secrets: |
+    #       DOCKER_CONFIG=${{ github.workspace }}
+
+    - name: Build container image
+      run: docker build -t registry.digitalocean.com/fiap-food-registry/fiap-food:latest .
+
+    - name: Log in to DigitalOcean Container Registry with short-lived credentials
+      run: doctl registry login --expiry-seconds 1200
+
+    - name: Push image to DigitalOcean Container Registry
+      run: docker push registry.digitalocean.com/fiap-food-registry/fiap-food:latest
+
+    - name: Deploy to Kubernetes
+      run: |
+        doctl kubernetes cluster kubeconfig save fiap-food-k8
+        kubectl apply -f artefatos\ yaml/deployment.yaml
+        kubectl apply -f artefatos\ yaml/service.yaml
+        kubectl rollout status deployment/fiap-food
+        kubectl patch deployment fiap-food -p \
+        "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
