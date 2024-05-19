@@ -1,3 +1,0 @@
-from .entregador_rotas import entregador_bp
-from .entregador_rotas import seleciona_entregador
-from .entregador_rotas import update_entregador_disponivel
