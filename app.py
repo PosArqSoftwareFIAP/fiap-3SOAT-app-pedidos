@@ -5,9 +5,9 @@ import sys
 from cliente import cliente_bp
 from restaurante import restaurante_bp
 from entregador import entregador_bp
-from avaliacao import avaliacao_bp
-from pedido import pedido_bp
-from produto import produto_bp
+from rotas.avaliacao import avaliacao_bp
+from rotas.pedido import pedido_bp
+from rotas.produto import produto_bp
 from fatura import fatura_bp
 from flask_restx import Api, Resource
 from flasgger import Swagger
