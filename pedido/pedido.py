@@ -2,12 +2,12 @@ from flask import Blueprint, jsonify,request
 import sys
 from db import db_mysql_class
 from produto import get_produto as gp
-from produto import get_produto_lote 
-from entregador import seleciona_entregador
-from entregador import update_entregador_disponivel
+from produto import get_produto_lote
 from itertools import groupby
 from datetime import datetime
 import traceback
+import requests
+
 from flasgger import swag_from
 
 pedido_bp = Blueprint('pedido', __name__)
@@ -95,14 +95,13 @@ def create_pedido():
             print("Passou: Pedido, query do pedido",file=sys.stderr)
             print(pedido,"\n",file=sys.stderr)
 
-
-
-            query_fatura = "INSERT INTO fatura (id_pedido, id_cliente, valor, status, data_fatura) VALUES (%s, %s, %s, %s, %s)"
-            values_fatura = (pedido[0], data.get('id_cliente'), valor_total, 1,current_datetime)
-            print(values_fatura,file=sys.stderr)
-            # arrumar ali no DATA[entregador] para pegar sem o data 
-            cursor.execute(query_fatura, values_fatura)
-            conn.commit()
+            body = {
+                    "id_pedido": pedido[0],
+                    "id_cliente": data.get('id_cliente'),
+                    "valor": valor_total,
+                    "status": 1
+                }
+            requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura",data=body,verify=False)
 
 
             return jsonify({"message": "pedido criado com sucesso","id pedido":pedido[0]}), 201
@@ -264,7 +263,9 @@ def update_pedido_preparacao(id):
         print(fatura,"\n",file=sys.stderr)
         if fatura[4] == 2:
 
-            entregador, resp_status = seleciona_entregador()
+
+            entregador = requests.get('http://fiap-food-entregador-dw889.ondigitalocean.app').json()
+
             print(entregador,file=sys.stderr)
             
             query = "UPDATE pedido SET id_entregador = %s, status_pedido = 2 WHERE id_pedido = %s"
@@ -325,7 +326,9 @@ def update_pedido_entregue(id):
         print("Passou: Pedido, query do pedido",file=sys.stderr)
         print(pedido,"\n",file=sys.stderr)
 
-        entregador, resp_status = update_entregador_disponivel(pedido[3])
+
+        entregador = requests.put(f"http://fiap-food-entregador-dw889.ondigitalocean.app/entregador/atualiza_entregador_disponivel/{pedido[3]}").json()
+
         print(entregador,file=sys.stderr)
         
         query = "UPDATE pedido SET status_pedido = 4 WHERE id_pedido = %s"
