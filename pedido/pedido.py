@@ -101,7 +101,13 @@ def create_pedido():
                     "valor": valor_total,
                     "status": 1
                 }
-            requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura",data=body,verify=False)
+            
+            headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+
+            requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura",headers=headers,data=body,verify=False)
 
 
             return jsonify({"message": "pedido criado com sucesso","id pedido":pedido[0]}), 201
