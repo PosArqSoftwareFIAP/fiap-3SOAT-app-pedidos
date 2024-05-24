@@ -112,7 +112,6 @@ def create_pedido():
             response = requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura/",headers=headers,data=body,verify=False, allow_redirects=False)
             print(response.status_code)
             print(response.headers) 
-
             if response.status_code == 301:
                 new_url = response.headers['Location']
                 response = requests.post(new_url, json=data, headers=headers)
