@@ -109,6 +109,7 @@ def create_pedido():
 
 
 
+
             response = requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura/",headers=headers,json=dados,verify=False, allow_redirects=False)
             print(response.status_code)
             print(response.headers) 
