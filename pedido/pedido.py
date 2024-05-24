@@ -110,9 +110,14 @@ def create_pedido():
 
 
             response = requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura/",headers=headers,data=body,verify=False, allow_redirects=False)
-            print(response.text,file=sys.stderr)
-            print(response.status_code,file=sys.stderr)
-            print(response.json(),file=sys.stderr)
+            print(response.status_code)
+            print(response.headers)  # Para ver a nova URL
+
+            if response.status_code == 301:
+                new_url = response.headers['Location']
+                response = requests.post(new_url, json=data, headers=headers)
+                print(response.status_code)
+                print(response.json())
 
             return jsonify({"message": "pedido criado com sucesso","id pedido":pedido[0]}), 201
         else:
