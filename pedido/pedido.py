@@ -103,8 +103,7 @@ def create_pedido():
                 }
             
             headers = {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Content-Type": "application/json"
             }
 
             requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura",headers=headers,data=body,verify=False)
