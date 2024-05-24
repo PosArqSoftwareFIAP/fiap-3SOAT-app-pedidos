@@ -1,14 +1,12 @@
 from flask import Blueprint, jsonify,request
 import sys
 from db import db_mysql_class
-from produto import get_produto as gp
-from produto import get_produto_lote
+from src.produto import get_produto as gp
+from src.produto import get_produto_lote
 from itertools import groupby
 from datetime import datetime
 import traceback
 import requests
-
-from flasgger import swag_from
 
 pedido_bp = Blueprint('pedido', __name__)
 
@@ -24,7 +22,6 @@ def check(list):
 
 # Rota para criar um novo pedido
 @pedido_bp.route('/pedido/cria_pedido', methods=['POST'])
-@swag_from('../swagger_yaml/create_pedido.yaml')
 def create_pedido():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -138,7 +135,6 @@ def create_pedido():
 
 # Rota para recuperar o pedido
 @pedido_bp.route('/pedido/consulta_pedido/<int:id>', methods=['GET'])
-@swag_from('../swagger_yaml/get_pedido.yaml')
 def get_pedido(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -166,7 +162,6 @@ def get_pedido(id):
 
 # Rota para recuperar o pedido
 @pedido_bp.route('/pedido/consulta_pedido_status/<int:id>', methods=['GET'])
-@swag_from('../swagger_yaml/get_pedido_status.yaml')
 def get_pedido_status(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -193,7 +188,6 @@ def get_pedido_status(id):
 
 # Rota para atualizar um pedido pelo ID
 @pedido_bp.route('/pedido/atualiza_pedido/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido.yaml')
 def update_pedido(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -217,7 +211,6 @@ def update_pedido(id):
 
 # Rota para excluir um pedido pelo ID
 @pedido_bp.route('/pedido/deleta_pedido/<int:id>', methods=['DELETE'])
-@swag_from('../swagger_yaml/delete_pedido.yaml')
 def delete_pedido(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -237,7 +230,6 @@ def delete_pedido(id):
 
 # Rota para atualizar um pedido pelo ID
 @pedido_bp.route('/pedido/atualiza_pedido_aguardando/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido_aguardando.yaml')
 def update_pedido_aguardando(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -262,7 +254,6 @@ def update_pedido_aguardando(id):
 
 # Rota para atualizar um pedido pelo ID para preparacao
 @pedido_bp.route('/pedido/atualiza_pedido_preparacao/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido_preparacao.yaml')
 def update_pedido_preparacao(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -301,7 +292,6 @@ def update_pedido_preparacao(id):
 
 # Rota para atualizar um pedido pelo ID
 @pedido_bp.route('/pedido/atualiza_pedido_a_caminho/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido_a_caminho.yaml')
 def update_pedido_a_caminho(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -327,7 +317,6 @@ def update_pedido_a_caminho(id):
 
 # Rota para atualizar um pedido pelo ID
 @pedido_bp.route('/pedido/atualiza_pedido_pago_entregue/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido_entregue.yaml')
 def update_pedido_entregue(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -362,7 +351,6 @@ def update_pedido_entregue(id):
 
 # Rota para recuperar o pedido
 @pedido_bp.route('/pedido/consulta_all_pedido_status/', methods=['GET'])
-@swag_from('../swagger_yaml/get_all_pedido_status.yaml')
 def get_all_pedido_status():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -387,7 +375,6 @@ def get_all_pedido_status():
 
 # Rota para atualizar um pedido pelo ID
 @pedido_bp.route('/pedido/atualiza_pedido_cancelado/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_pedido_cancelado.yaml')
 def update_pedido_cancelado(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()

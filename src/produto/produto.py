@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify,request
 import sys
 from db import db_mysql_class
-from flasgger import swag_from
 
 
 produto_bp = Blueprint('produto', __name__)
@@ -14,7 +13,6 @@ produto_bp = Blueprint('produto', __name__)
 
 @produto_bp.route('/produto/cria_produto', methods=['POST'])
 @produto_bp.route('/produto/cria_produto/', methods=['POST'])
-@swag_from('../swagger_yaml/criar_produto.yaml')
 def criar_produto():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -48,7 +46,6 @@ def criar_produto():
 # Rota para recuperar o produto
 @produto_bp.route('/produto/consulta_produto/<int:id>', methods=['GET'])
 @produto_bp.route('/produto/consulta_produto/<int:id>/', methods=['GET'])
-@swag_from('../swagger_yaml/get_produto.yaml')
 def get_produto(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -74,7 +71,6 @@ def get_produto(id):
 
 @produto_bp.route('/produto/atualiza_produto/<int:id>', methods=['PUT'])
 @produto_bp.route('/produto/atualiza_produto/<int:id>/', methods=['PUT'])
-@swag_from('../swagger_yaml/atualizar_produto.yaml')
 def atualizar_produto(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -107,7 +103,6 @@ def atualizar_produto(id):
 
 @produto_bp.route('/produto/deleta_produto/<int:id>', methods=['DELETE'])
 @produto_bp.route('/produto/deleta_produto/<int:id>/', methods=['DELETE'])
-@swag_from('../swagger_yaml/excluir_produto.yaml')
 def excluir_produto(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -128,7 +123,6 @@ def excluir_produto(id):
 
 
 @produto_bp.route('/produto/consulta_produto_categoria/<string:categoria>/', methods=['GET'])
-@swag_from('../swagger_yaml/get_produto_categoria.yaml')
 def get_produto_categoria(categoria):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -162,7 +156,6 @@ def get_produto_categoria(categoria):
 
 # Rota para recuperar todos os produtos
 @produto_bp.route('/produto/consulta_all/', methods=['GET'])
-@swag_from('../swagger_yaml/get_produto_all.yaml')
 def get_produto_all():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -191,7 +184,6 @@ def get_produto_all():
 
 # Rota para recuperar todos os produtos
 @produto_bp.route('/produto/consulta_restaurante/<int:id_restaurante>', methods=['GET'])
-@swag_from('../swagger_yaml/get_produto_restaurante.yaml')
 def get_produto_restaurante(id_restaurante):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()

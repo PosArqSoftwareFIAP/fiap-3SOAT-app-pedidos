@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify,request
 import sys
 from db import db_mysql_class
-from flasgger import swag_from
 
 
 restaurante_bp = Blueprint('restaurante', __name__)
@@ -9,7 +8,6 @@ restaurante_bp = Blueprint('restaurante', __name__)
 
 #Rota para criar um novo restaurante
 @restaurante_bp.route('/restaurante/cria_restaurante', methods=['POST'])
-@swag_from('../swagger_yaml/create_restaurante.yaml')
 def create_restaurante():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -31,8 +29,6 @@ def create_restaurante():
 
 # Rota para recuperar todos os restaurantes
 @restaurante_bp.route('/restaurante/consulta_restaurante/<int:id>', methods=['GET'])
-@swag_from('../swagger_yaml/get_restaurantes.yaml')
-
 def get_restaurantes(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -56,7 +52,6 @@ def get_restaurantes(id):
 
 # Rota para atualizar um restaurante pelo ID
 @restaurante_bp.route('/restaurante/atualiza_restaurante/<int:id>', methods=['PUT'])
-@swag_from('../swagger_yaml/update_restaurante.yaml')
 def update_restaurante(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -83,7 +78,6 @@ def update_restaurante(id):
 
 # Rota para excluir um restaurante pelo ID
 @restaurante_bp.route('/restaurante/deleta_restaurante/<int:id>', methods=['DELETE'])
-@swag_from('../swagger_yaml/delete_restaurante.yaml')
 def delete_restaurante(id):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -109,7 +103,6 @@ def delete_restaurante(id):
 
 # Rota para recuperar todos os restaurantes
 @restaurante_bp.route('/restaurante/consulta_all/', methods=['GET'])
-@swag_from('../swagger_yaml/get_restaurantes_all.yaml')
 def get_restaurantes_all():
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
@@ -136,7 +129,6 @@ def get_restaurantes_all():
 
 # Rota para recuperar todos os restaurantes
 @restaurante_bp.route('/restaurante/consulta_categoria/<string:categoria>', methods=['GET'])
-@swag_from('../swagger_yaml/get_restaurantes_categoria.yaml')
 def get_restaurantes_categoria(categoria):
     db_objt = db_mysql_class()
     conn = db_objt.get_db_connection()
