@@ -107,7 +107,7 @@ def create_pedido():
 
 
 
-            response = requests.post("http://fiap-food-fatura-fs7rg.ondigitalocean.app/fatura/cria_fatura/",headers=headers,json=dados,verify=False, allow_redirects=False)
+            response = requests.post("https://octopus-app-865nn.ondigitalocean.app/fatura/cria_fatura/",headers=headers,json=dados,verify=False, allow_redirects=False)
             print(response.status_code)
             print(response.headers) 
             if response.status_code == 301:
@@ -268,9 +268,7 @@ def update_pedido_preparacao(id):
         print("Passou: query_fatura, ",file=sys.stderr)
         print(fatura,"\n",file=sys.stderr)
         if fatura[4] == 2:
-
-
-            entregador = requests.get('http://fiap-food-entregador-dw889.ondigitalocean.app').json()
+            entregador = requests.get('https://oyster-app-pov9e.ondigitalocean.app/entregador/seleciona_entregador/').json()
 
             print(entregador,file=sys.stderr)
             
@@ -331,7 +329,7 @@ def update_pedido_entregue(id):
         print(pedido,"\n",file=sys.stderr)
 
 
-        entregador = requests.put(f"http://fiap-food-entregador-dw889.ondigitalocean.app/entregador/atualiza_entregador_disponivel/{pedido[3]}").json()
+        entregador = requests.put(f"https://oyster-app-pov9e.ondigitalocean.app/entregador/atualiza_entregador_disponivel/{pedido[3]}").json()
 
         print(entregador,file=sys.stderr)
         
