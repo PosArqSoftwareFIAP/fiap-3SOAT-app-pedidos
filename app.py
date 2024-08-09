@@ -3,8 +3,10 @@ import mysql.connector
 import os
 import sys
 from src.avaliacao import avaliacao_bp
+from src.cliente import cliente_bp
 from src.pedido import pedido_bp
 from src.produto import produto_bp
+from src.restaurante import restaurante_bp
 from functools import wraps
 from db import db_mysql_class
 
@@ -18,6 +20,8 @@ app = Flask(__name__)
 app.register_blueprint(produto_bp)
 app.register_blueprint(pedido_bp)
 app.register_blueprint(avaliacao_bp)
+app.register_blueprint(cliente_bp)
+app.register_blueprint(restaurante_bp)
 
 
 
